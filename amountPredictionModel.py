@@ -1,46 +1,33 @@
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression, Ridge, Lasso
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler
-import pandas as pd
 import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor
+from tabulate import tabulate
 from featureEngineering import finalDF
 
+data = finalDF.head(1000)
+print(tabulate(data))
+print(data.info())
+
+# Handling NaN values.
+data['Income'] = data['Income'].fillna(data['Income'].median())
+data['Income'] = data['Income'].astype(np.int64)
+print(data.info())
+
 # Selecting features and target variable
-X = finalDF[["Cust_Age", "Education", "Marital_Status", "Income"]]
-y = finalDF[["Wines", "Fruits", "Meat", "Fish", "Sweet", "Gold"]]
+X = data[["Cust_Age", "Education", "Marital_Status", "Income"]]
+y = data[["Wines", "Fruits", "Meat", "Fish", "Sweet", "Gold"]]
 
 # One-hot encode categorical variables
-X = pd.get_dummies(X, columns=["Marital_Status", "Education"], drop_first=True)
+X = pd.get_dummies(X, columns=["Education", "Marital_Status"], drop_first=True)
 
 # Splitting the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+    X, y, test_size=0.3, random_state=42
 )
-
-# Handling missing values in target variable
-y_train = y_train.dropna()
-
-# Drop rows with NaN in X_train and X_test
-X_train = pd.DataFrame(X_train).dropna()
-X_test = pd.DataFrame(X_test).dropna()
-
-# Align y_train with the corresponding rows in X_train
-y_train = y_train.loc[X_train.index]
-
-# Standardizing and clipping values in features for X_train
-scalar = StandardScaler()
-X_train = scalar.fit_transform(X_train)
-X_train = np.clip(X_train, -np.finfo(np.float64).max, np.finfo(np.float64).max)
-
-# Align y_test with the corresponding rows in X_test
-y_test = y_test.loc[X_test.index]
-
-# Standardizing and clipping values in features for X_test
-X_test = scalar.transform(X_test)
-X_test = np.clip(X_test, -np.finfo(np.float64).max, np.finfo(np.float64).max)
 
 # Initializing models
 models = [
