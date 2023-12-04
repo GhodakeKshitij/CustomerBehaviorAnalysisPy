@@ -6,10 +6,11 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import KFold
 from sklearn.tree import DecisionTreeRegressor
 from tabulate import tabulate
-from featureEngineering import finalDF
+import featureEngineering
 
-data = finalDF.head(1000)
-print(tabulate(data))
+data = featureEngineering.finalDF[["Cust_Age", "Education", "Marital_Status", "Income", "Wines", "Fruits", "Meat", "Fish", "Sweet", "Gold"]]
+data = data.head(1000)
+# print(tabulate(data))
 print(data.info())
 
 # Handling NaN values.
@@ -70,8 +71,7 @@ for model in models:
     print(f"Model: {model.__class__.__name__}")
     print(f"Average MSE for training set: {np.mean(mse_train_list)}")
     print(f"Average MAE for training set: {np.mean(mae_train_list)}")
-    print(f"Average R-Squared for training set: {np.mean(r2_train_list)}")
-    print("\n")
+    print(f"Average R-Squared for training set: {np.mean(r2_train_list)}\n")
     print(f"Average MSE for testing set: {np.mean(mse_test_list)}")
     print(f"Average MAE for testing set: {np.mean(mae_test_list)}")
     print(f"Average R-Squared for testing set: {np.mean(r2_test_list)}")
