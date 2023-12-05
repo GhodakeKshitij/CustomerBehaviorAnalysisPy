@@ -8,24 +8,25 @@ from sklearn.tree import DecisionTreeRegressor
 from tabulate import tabulate
 import featureEngineering
 
+#Accessing relevant features from the dataset
 data = featureEngineering.finalDF[["Cust_Age", "Education", "Marital_Status", "Income", "Wines", "Fruits", "Meat", "Fish", "Sweet", "Gold"]]
 data = data.head(1000)
 # print(tabulate(data))
 print(data.info())
 
-# Handling NaN values.
+#Handling NaN values.
 data['Income'] = data['Income'].fillna(data['Income'].median())
 data['Income'] = data['Income'].astype(np.int64)
 print(data.info())
 
-# Selecting features and target variable
+#Selecting features and target variable
 X = data[["Cust_Age", "Education", "Marital_Status", "Income"]]
 y = data[["Wines", "Fruits", "Meat", "Fish", "Sweet", "Gold"]]
 
-# One-hot encode categorical variables
+#One-hot encode categorical variables
 X = pd.get_dummies(X, columns=["Education", "Marital_Status"], drop_first=True)
 
-# Initializing models
+#Initializing models
 models = [
     LinearRegression(),
     Lasso(),
@@ -34,9 +35,10 @@ models = [
     RandomForestRegressor(),
 ]
 
-# KFold Cross-validation
+#Implementing KFold Cross-validation
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 
+#Making predictions
 for model in models:
     mse_train_list, mae_train_list, r2_train_list = [], [], []
     mse_test_list, mae_test_list, r2_test_list = [], [], []
