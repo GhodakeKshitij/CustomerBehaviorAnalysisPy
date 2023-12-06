@@ -5,6 +5,7 @@ from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import KFold
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.preprocessing import StandardScaler
 from tabulate import tabulate
 import featureEngineering
 
@@ -26,6 +27,10 @@ y = data[["Wines", "Fruits", "Meat", "Fish", "Sweet", "Gold"]]
 #One-hot encode categorical variables
 X = pd.get_dummies(X, columns=["Education", "Marital_Status"], drop_first=True)
 
+#Scaling the data
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
 #Initializing models
 models = [
     LinearRegression(),
@@ -44,7 +49,7 @@ for model in models:
     mse_test_list, mae_test_list, r2_test_list = [], [], []
 
     for train_index, test_index in kf.split(X):
-        X_train, X_test = X.iloc[train_index], X.iloc[test_index]
+        X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y.iloc[train_index], y.iloc[test_index]
         model.fit(X_train, y_train)
 
