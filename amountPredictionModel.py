@@ -76,10 +76,12 @@ for model in models:
 
     # Printing the results for the current model
     print(f"Model: {model.__class__.__name__}")
-    print(f"Average MSE for training set: {np.mean(mse_train_list)}")
-    print(f"Average MAE for training set: {np.mean(mae_train_list)}")
-    print(f"Average R-Squared for training set: {np.mean(r2_train_list)}\n")
-    print(f"Average MSE for testing set: {np.mean(mse_test_list)}")
-    print(f"Average MAE for testing set: {np.mean(mae_test_list)}")
-    print(f"Average R-Squared for testing set: {np.mean(r2_test_list)}")
+    print("For Training Set:")
+    print(f"Average MSE: {np.mean(mse_train_list)}")
+    print(f"Average MAE: {np.mean(mae_train_list)}")
+    print(f"Average R-Squared: {np.mean(r2_train_list)}\n")
+    print("For Test Set:")
+    print(f"Average MSE: {np.mean(mse_test_list)}")
+    print(f"Average MAE: {np.mean(mae_test_list)}")
+    print(f"Average R-Squared: {np.mean(r2_test_list)}")
     print("-" * 50)
