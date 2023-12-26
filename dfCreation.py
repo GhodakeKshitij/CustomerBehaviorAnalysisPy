@@ -3,7 +3,7 @@ from tabulate import tabulate
 
 # Load the DataFrame
 data = pd.read_excel(
-    "E:\MCS\SYMCS\Semester 3\ML\CustomerBehaviorAnalysisPy\marketing_campaign.xlsx"
+    "E:\MCS\SYMCS\Semester 3\ML\Project\CustomerBehaviorAnalysisPy\marketing_campaign.xlsx"
 )
 
 feature_names = [

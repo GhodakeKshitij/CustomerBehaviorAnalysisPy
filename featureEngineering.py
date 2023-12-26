@@ -62,6 +62,6 @@ finalDF = finalDF.rename(
     }
 )
 finalDF.to_csv(
-    "E:\\MCS\\SYMCS\\Semester 3\\ML\\CustomerBehaviorAnalysisPy\\finalDataframe.csv",
+    "E:\\MCS\\SYMCS\\Semester 3\\ML\\Project\\CustomerBehaviorAnalysisPy\\finalDataframe.csv",
     index=False,
 )
